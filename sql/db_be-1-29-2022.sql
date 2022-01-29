@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 29/01/2022 20:17:23
+ Date: 29/01/2022 20:23:43
 */
 
 SET NAMES utf8mb4;
@@ -29,9 +29,9 @@ CREATE TABLE `admin`  (
   `lastname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `telephone` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `gender` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'เพศ( 0 = ชาย , 1 = หญิง )',
-  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_at` datetime NOT NULL,
-  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `update_at` datetime NOT NULL,
   `active` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -40,7 +40,7 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES (1, 'admin', '1234', 'admin', '', '', '', NULL, '2022-01-28 11:27:16', NULL, '2022-01-28 11:27:16', 1);
+INSERT INTO `admin` VALUES (1, 'admin', '1234', 'admin', '', '', '', '', '2022-01-28 11:27:16', '', '2022-01-28 11:27:16', 1);
 
 -- ----------------------------
 -- Table structure for department
@@ -52,9 +52,9 @@ CREATE TABLE `department`  (
   `enc_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `department_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'คำอธิบาย หรือ หมายเหตุ',
-  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_at` datetime NOT NULL,
-  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `update_at` datetime NOT NULL,
   `active` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -130,9 +130,9 @@ status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 
   `borrow_date` datetime NOT NULL COMMENT 'วันที่ยืม',
   `admin_approve_return` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'คนอนุมัติการคืน',
   `return_date` datetime NULL DEFAULT NULL COMMENT 'วันที่คืน',
-  `create_by` datetime NOT NULL,
+  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_at` datetime NOT NULL,
-  `update_by` datetime NOT NULL,
+  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `update_at` datetime NOT NULL,
   `active` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
