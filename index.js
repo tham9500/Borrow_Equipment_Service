@@ -18,9 +18,11 @@ app.use(
 //require routes
 var CheckAPI = require("./routers/CheckAPI");
 var Register = require("./routers/Register");
+var UploadFiles = require("./routers/UploadFiles");
 
 //use routes
 app.use("/", CheckAPI);
 app.use("/Register", Register);
+app.use("/UploadFiles", UploadFiles);
 
 app.use(express.static("uploads")); //สำหรับโชว์รูปภาพใน service
