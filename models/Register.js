@@ -51,7 +51,7 @@ var Register = {
     );
   },
 
-  postdataAdmin: function (data, password, callback) {
+  insertdataAdmin: function (data, password, callback) {
     let username = data.username;
     let firstname = data.firstname;
     let lastname = data.lastname;
@@ -79,7 +79,7 @@ var Register = {
     );
   },
 
-  postdataDepartmant: function (data, password, callback) {
+  insertdataDepartmant: function (data, password, callback) {
     let username = data.username;
     let firstname = data.firstname;
     let department_name = data.department_name;
@@ -104,7 +104,7 @@ var Register = {
     );
   },
 
-  postdataMember: function (data, password, callback) {
+  insertdataMember: function (data, password, callback) {
     let rfid = data.rfid;
     let username = data.username;
     let firstname = data.firstname;
@@ -135,7 +135,7 @@ var Register = {
     );
   },
 
-  postdataEquipment: function (data, callback) {
+  insertdataEquipment: function (data, callback) {
     let rfid = data.rfid;
     let equipment_name = data.equipment_name;
     let brand = data.brand;
