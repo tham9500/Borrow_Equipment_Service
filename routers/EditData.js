@@ -1,27 +1,33 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
-const Register = require("../models/Register");
+const EditData = require("../models/EditData");
 
-router.post("/PostRegis", async function (req, res, next) {
+router.post("/UpdateData", async function (req, res, next) {
   let type_user = req.body.type_user;
   let dataResponse;
   let listDuplicateData = [];
+  let hashPW;
 
   switch (parseInt(type_user)) {
     ////////////////////////////Admin////////////////////////////////
     case 1: {
       //เช็ค username
-      let countID = await getcheckAdmin(req.body.username);
+      let countID = await getcheckAdmin(req.body.username, req.body.id);
       if (countID > 0) {
         listDuplicateData.push("username");
 
         dataResponse = { DuplicateData: listDuplicateData };
       } else {
-        //เข้ารหัสผ่าน
-        let hashPW = await bcrypt.hash(req.body.enc_password, 10);
+        if (req.body.enc_password != "") {
+          //เข้ารหัสผ่าน
+          hashPW = await bcrypt.hash(req.body.enc_password, 10);
+        } else {
+          hashPW = "";
+        }
+
         //บันทึกข้อมูล
-        dataResponse = await insertdataAdmin(req.body, hashPW);
+        dataResponse = await updatedataAdmin(req.body, hashPW);
       }
 
       break;
@@ -30,16 +36,22 @@ router.post("/PostRegis", async function (req, res, next) {
     //////////////////////////Department//////////////////////////////
     case 2: {
       //เช็ค username
-      let countID = await getcheckDepart(req.body.username);
+      let countID = await getcheckDepart(req.body.username, req.body.id);
       if (countID > 0) {
         listDuplicateData.push("username");
 
         dataResponse = { DuplicateData: listDuplicateData };
       } else {
-        //เข้ารหัสผ่าน
-        let hashPW = await bcrypt.hash(req.body.enc_password, 10);
+        if (req.body.enc_password != "") {
+          //เข้ารหัสผ่าน
+          hashPW = await bcrypt.hash(req.body.enc_password, 10);
+        } else {
+          hashPW = "";
+        }
+
         //บันทึกข้อมูล
-        dataResponse = await insertdataDepartmant(req.body, hashPW);
+        dataResponse = await updatedataDepartmant(req.body, hashPW);
+        console.log(dataResponse);
       }
 
       break;
@@ -62,10 +74,15 @@ router.post("/PostRegis", async function (req, res, next) {
 
         dataResponse = { DuplicateData: listDuplicateData };
       } else {
-        //เข้ารหัสผ่าน
-        let hashPW = await bcrypt.hash(req.body.enc_password, 10);
+        if (req.body.enc_password != "") {
+          //เข้ารหัสผ่าน
+          hashPW = await bcrypt.hash(req.body.enc_password, 10);
+        } else {
+          hashPW = "";
+        }
+
         //บันทึกข้อมูล
-        dataResponse = await insertdataMember(req.body, hashPW);
+        dataResponse = await updatedataMember(req.body, hashPW);
       }
 
       break;
@@ -93,7 +110,7 @@ router.post("/PostRegis", async function (req, res, next) {
         dataResponse = { DuplicateData: listDuplicateData };
       } else {
         //บันทึกข้อมูล
-        dataResponse = await insertdataEquipment(req.body);
+        dataResponse = await updatedataEquipment(req.body);
       }
 
       break;
@@ -107,16 +124,16 @@ router.post("/PostRegis", async function (req, res, next) {
   if (typeof dataResponse != "boolean") {
     res.json({ status: "Failed", data: dataResponse });
   } else if (dataResponse) {
-    res.json({ status: "Succeed", data: "Insert data successfully" });
+    res.json({ status: "Succeed", data: "Update data successfully" });
   } else {
     res.json({ status: "Failed", data: "Error" });
   }
 });
 
-async function getcheckAdmin(username) {
+async function getcheckAdmin(username, id) {
   return new Promise((resolve, reject) => {
     try {
-      Register.getcheckAdmin(username, (err, rows) => {
+      EditData.getcheckAdmin(username, id, (err, rows) => {
         if (rows != null) {
           resolve(rows.length);
         } else {
@@ -131,10 +148,10 @@ async function getcheckAdmin(username) {
   });
 }
 
-async function getcheckDepart(username) {
+async function getcheckDepart(username, id) {
   return new Promise((resolve, reject) => {
     try {
-      Register.getcheckDepart(username, (err, rows) => {
+      EditData.getcheckDepart(username, id, (err, rows) => {
         if (rows != null) {
           resolve(rows.length);
         } else {
@@ -152,7 +169,7 @@ async function getcheckDepart(username) {
 async function getcheckMember(data) {
   return new Promise((resolve, reject) => {
     try {
-      Register.getcheckMember(data, (err, rows) => {
+      EditData.getcheckMember(data, (err, rows) => {
         if (rows != null) {
           resolve(rows);
         } else {
@@ -170,7 +187,7 @@ async function getcheckMember(data) {
 async function getcheckEquip(data) {
   return new Promise((resolve, reject) => {
     try {
-      Register.getcheckEquip(data, (err, rows) => {
+      EditData.getcheckEquip(data, (err, rows) => {
         if (rows != null) {
           resolve(rows);
         } else {
@@ -185,10 +202,10 @@ async function getcheckEquip(data) {
   });
 }
 
-async function insertdataAdmin(data, password) {
+async function updatedataAdmin(data, password) {
   return new Promise((resolve, reject) => {
     try {
-      Register.insertdataAdmin(data, password, (err, rows) => {
+      EditData.updatedataAdmin(data, password, (err, rows) => {
         if (err) {
           console.log(err);
           resolve(false);
@@ -203,10 +220,10 @@ async function insertdataAdmin(data, password) {
   });
 }
 
-async function insertdataDepartmant(data, password) {
+async function updatedataDepartmant(data, password) {
   return new Promise((resolve, reject) => {
     try {
-      Register.insertdataDepartmant(data, password, (err, rows) => {
+      EditData.updatedataDepartmant(data, password, (err, rows) => {
         if (err) {
           console.log(err);
           resolve(false);
@@ -221,10 +238,10 @@ async function insertdataDepartmant(data, password) {
   });
 }
 
-async function insertdataMember(data, password) {
+async function updatedataMember(data, password) {
   return new Promise((resolve, reject) => {
     try {
-      Register.insertdataMember(data, password, (err, rows) => {
+      EditData.updatedataMember(data, password, (err, rows) => {
         if (err) {
           console.log(err);
           resolve(false);
@@ -239,10 +256,10 @@ async function insertdataMember(data, password) {
   });
 }
 
-async function insertdataEquipment(data) {
+async function updatedataEquipment(data) {
   return new Promise((resolve, reject) => {
     try {
-      Register.insertdataEquipment(data, (err, rows) => {
+      EditData.updatedataEquipment(data, (err, rows) => {
         if (err) {
           console.log(err);
           resolve(false);
