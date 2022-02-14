@@ -142,14 +142,13 @@ var Register = {
     let model = data.model;
     let equipment_number = data.equipment_number;
     let serial_number = data.serial_number;
-    let request_department_id = data.request_department_id;
     let description = data.description;
     let datetime = data.datetime;
     let create_by = data.create_by;
     return db.query(
-      "INSERT INTO `equipment`(`rfid`, `equipment_name`, `brand`, `model`, `equipment_number`, `serial_number`, `request_department_id`, `description`," +
+      "INSERT INTO `equipment`(`rfid`, `equipment_name`, `brand`, `model`, `equipment_number`, `serial_number`, `description`," +
         "`create_by`, `create_at`, `update_by`, `update_at`, `active`)" +
-        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
       [
         rfid,
         equipment_name,
@@ -157,7 +156,6 @@ var Register = {
         model,
         equipment_number,
         serial_number,
-        request_department_id,
         description,
         create_by,
         datetime,
