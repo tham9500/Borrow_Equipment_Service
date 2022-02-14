@@ -154,13 +154,12 @@ var EditData = {
     let model = data.model;
     let equipment_number = data.equipment_number;
     let serial_number = data.serial_number;
-    let request_department_id = data.request_department_id;
     let description = data.description;
     let datetime = data.datetime;
     let update_by = data.update_by;
 
     return db.query(
-      `UPDATE equipment SET rfid= ?, equipment_name= ?, brand= ?, model= ?, equipment_number= ?, serial_number= ?, request_department_id= ?, description= ?,
+      `UPDATE equipment SET rfid= ?, equipment_name= ?, brand= ?, model= ?, equipment_number= ?, serial_number= ?, description= ?,
       update_by= ?, update_at=?, active=1 WHERE id = ? AND active= 1`,
       [
         rfid,
@@ -169,7 +168,6 @@ var EditData = {
         model,
         equipment_number,
         serial_number,
-        request_department_id,
         description,
         update_by,
         datetime,
